@@ -149,7 +149,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-screen w-full bg-[#212121] text-[#ececec] overflow-hidden">
+    <div className="flex h-screen w-full bg-[var(--background)] text-[var(--foreground)] overflow-hidden transition-colors">
       <Sidebar 
         chatHistory={chatHistory}
         onNewChat={handleNewChat}
@@ -160,8 +160,8 @@ export default function Home() {
       <main className="flex-1 flex flex-col relative overflow-hidden">
         {messages.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center p-4">
-            <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-4">
-              <Sparkles size={24} className="text-white/60" />
+            <div className="w-12 h-12 rounded-full bg-[var(--hover-bg)] flex items-center justify-center mb-4">
+              <Sparkles size={24} className="text-[var(--foreground-muted)]" />
             </div>
             <h1 className="text-2xl font-semibold mb-8">How can I help you today?</h1>
             
@@ -175,7 +175,7 @@ export default function Home() {
                 <button 
                   key={i}
                   onClick={() => handleSend(suggestion)}
-                  className="p-4 rounded-xl border border-white/10 hover:bg-white/5 transition-colors text-left text-sm text-white/60 hover:text-white/90"
+                  className="p-4 rounded-xl border border-[var(--border)] hover:bg-[var(--hover-bg)] transition-colors text-left text-sm text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
                 >
                   {suggestion}
                 </button>
@@ -184,7 +184,7 @@ export default function Home() {
           </div>
         ) : (
           <div className="flex-1 overflow-y-auto custom-scrollbar">
-            <div className="pb-32">
+            <div className="pb-32 w-full max-w-4xl mx-auto">
               {messages.map((msg) => (
                 <Message key={msg.id} role={msg.role} content={msg.content} />
               ))}
@@ -193,7 +193,7 @@ export default function Home() {
           </div>
         )}
 
-        <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-[#212121] via-[#212121] to-transparent pt-10">
+        <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-[var(--background)] via-[var(--background)] to-transparent pt-10">
           <InputArea onSend={handleSend} disabled={isLoading} />
         </div>
       </main>

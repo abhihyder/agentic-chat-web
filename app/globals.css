@@ -1,8 +1,29 @@
 @import "tailwindcss";
 
 :root {
+  --background: #ffffff;
+  --background-secondary: #f9fafb;
+  --foreground: #1f2937;
+  --foreground-muted: #6b7280;
+  --border: #e5e7eb;
+  --input-bg: #f3f4f6;
+  --hover-bg: rgba(0, 0, 0, 0.05);
+  --active-bg: rgba(0, 0, 0, 0.1);
+  --scrollbar: #d1d5db;
+  --scrollbar-hover: #9ca3af;
+}
+
+.dark {
   --background: #212121;
+  --background-secondary: #171717;
   --foreground: #ececec;
+  --foreground-muted: #a1a1aa;
+  --border: rgba(255, 255, 255, 0.1);
+  --input-bg: #2f2f2f;
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --active-bg: rgba(255, 255, 255, 0.1);
+  --scrollbar: #424242;
+  --scrollbar-hover: #525252;
 }
 
 body {
@@ -10,6 +31,7 @@ body {
   color: var(--foreground);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Custom scrollbar for clean look */
@@ -22,12 +44,12 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #424242;
+  background: var(--scrollbar);
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #525252;
+  background: var(--scrollbar-hover);
 }
 
 .markdown-body {
@@ -44,11 +66,15 @@ body {
 }
 
 .markdown-body pre {
-  background: #0d0d0d;
+  background: var(--input-bg);
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;
   margin: 1rem 0;
+}
+
+.dark .markdown-body pre {
+  background: #0d0d0d;
 }
 
 .markdown-body code {

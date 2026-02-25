@@ -30,7 +30,7 @@ export default function InputArea({ onSend, disabled }: InputAreaProps) {
     <div className="w-full max-w-3xl mx-auto px-4 pb-6 pt-2">
       <form 
         onSubmit={handleSubmit}
-        className="relative flex flex-col w-full bg-[#2f2f2f] rounded-2xl border border-white/10 focus-within:border-white/20 transition-colors"
+        className="relative flex flex-col w-full bg-[var(--input-bg)] rounded-2xl border border-[var(--border)] focus-within:border-[var(--foreground-muted)] transition-colors"
       >
         <textarea
           value={input}
@@ -39,19 +39,19 @@ export default function InputArea({ onSend, disabled }: InputAreaProps) {
           placeholder="Message ChatGPT"
           rows={1}
           disabled={disabled}
-          className="w-full bg-transparent border-none focus:ring-0 focus:outline-none resize-none py-4 pl-4 pr-12 text-white placeholder-white/40 max-h-[200px] custom-scrollbar"
+          className="w-full bg-transparent border-none focus:ring-0 focus:outline-none resize-none py-4 pl-4 pr-12 text-[var(--foreground)] placeholder-[var(--foreground-muted)] max-h-[200px] custom-scrollbar"
           style={{ height: 'auto', minHeight: '56px' }}
         />
         
         <div className="flex items-center justify-between px-2 pb-2">
           <div className="flex items-center gap-1">
-            <button type="button" className="p-2 rounded-lg hover:bg-white/5 text-white/40 transition-colors">
+            <button type="button" className="p-2 rounded-lg hover:bg-[var(--hover-bg)] text-[var(--foreground-muted)] transition-colors">
               <Paperclip size={18} />
             </button>
-            <button type="button" className="p-2 rounded-lg hover:bg-white/5 text-white/40 transition-colors">
+            <button type="button" className="p-2 rounded-lg hover:bg-[var(--hover-bg)] text-[var(--foreground-muted)] transition-colors">
               <Search size={18} />
             </button>
-            <button type="button" className="p-2 rounded-lg hover:bg-white/5 text-white/40 transition-colors">
+            <button type="button" className="p-2 rounded-lg hover:bg-[var(--hover-bg)] text-[var(--foreground-muted)] transition-colors">
               <ImageIcon size={18} />
             </button>
           </div>
@@ -61,15 +61,15 @@ export default function InputArea({ onSend, disabled }: InputAreaProps) {
             disabled={!input.trim() || disabled}
             className={`p-2 rounded-xl transition-all ${
               input.trim() && !disabled
-                ? 'bg-white text-black hover:bg-white/90' 
-                : 'bg-white/10 text-white/20'
+                ? 'bg-[var(--foreground)] text-[var(--background)] hover:opacity-90' 
+                : 'bg-[var(--hover-bg)] text-[var(--foreground-muted)]'
             }`}
           >
             <ArrowUp size={20} strokeWidth={3} />
           </button>
         </div>
       </form>
-      <p className="text-[11px] text-white/40 text-center mt-3">
+      <p className="text-[11px] text-[var(--foreground-muted)] text-center mt-3">
         ChatGPT can make mistakes. Check important info.
       </p>
     </div>
