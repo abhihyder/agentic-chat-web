@@ -184,7 +184,7 @@ export default function Home() {
           </div>
         ) : (
           <div className="flex-1 overflow-y-auto custom-scrollbar">
-            <div className="pb-32 w-full max-w-4xl mx-auto mt-10">
+            <div className="pb-40 w-full max-w-4xl mx-auto mt-10">
               {messages.map((msg) => (
                 <Message key={msg.id} role={msg.role} content={msg.content} />
               ))}
