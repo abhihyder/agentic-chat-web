@@ -1,11 +1,13 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Sparkles } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import Message from './components/Message';
 import InputArea from './components/InputArea';
 import { Message as MessageType, ChatHistoryItem } from './types/chat';
+import { useAuth } from './context/AuthContext';
 
 interface Conversation {
   id: string;
@@ -72,10 +74,19 @@ const initialConversations: Conversation[] = [
 ];
 
 export default function Home() {
+  const router = useRouter();
+  const { isAuthenticated, loading } = useAuth();
   const [conversations, setConversations] = useState<Conversation[]>(initialConversations);
   const [activeChatId, setActiveChatId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      router.replace('/login');
+    }
+  }, [isAuthenticated, loading, router]);
 
   const activeConversation = conversations.find(c => c.id === activeChatId);
   const messages = activeConversation?.messages || [];
@@ -93,6 +104,22 @@ export default function Home() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Show loading state while checking auth
+  if (loading) {
+    return (
+      <div className="flex h-screen w-full bg-[var(--background)] items-center justify-center">
+        <div className="animate-spin">
+          <Sparkles size={48} className="text-emerald-600" />
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render if not authenticated (will redirect)
+  if (!isAuthenticated) {
+    return null;
+  }
 
   const handleSend = (text: string) => {
     const userMessage: MessageType = {
