@@ -5,9 +5,10 @@ import { User, Sparkles, Copy, ThumbsUp, ThumbsDown, RotateCcw } from 'lucide-re
 interface MessageProps {
   role: 'user' | 'assistant';
   content: string;
+  isLoading?: boolean;
 }
 
-export default function Message({ role, content }: MessageProps) {
+export default function Message({ role, content, isLoading = false }: MessageProps) {
   const isAssistant = role === 'assistant';
 
   const handleCopy = () => {
@@ -25,11 +26,19 @@ export default function Message({ role, content }: MessageProps) {
           <div className="font-semibold text-sm">
             {isAssistant ? 'ChatGPT' : 'You'}
           </div>
-          <div className={`text-[var(--foreground)] opacity-90 leading-relaxed whitespace-pre-wrap break-words ${isAssistant ? 'text-left' : 'text-right'}`}>
-            {content}
-          </div>
+          {isLoading ? (
+            <div className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded-full bg-[var(--foreground-muted)] animate-bounce" />
+              <span className="w-2 h-2 rounded-full bg-[var(--foreground-muted)] animate-bounce [animation-delay:150ms]" />
+              <span className="w-2 h-2 rounded-full bg-[var(--foreground-muted)] animate-bounce [animation-delay:300ms]" />
+            </div>
+          ) : (
+            <div className={`text-[var(--foreground)] opacity-90 leading-relaxed whitespace-pre-wrap break-words ${isAssistant ? 'text-left' : 'text-right'}`}>
+              {content}
+            </div>
+          )}
           
-          {isAssistant && (
+          {isAssistant && !isLoading && (
             <div className="flex items-center gap-2 pt-2 ">
               <button 
                 onClick={handleCopy}

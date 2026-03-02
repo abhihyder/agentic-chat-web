@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { MessageSquare, Plus, Sun, Moon, LogOut, ChevronDown, ChevronUp } from 'lucide-react';
+import { MessageSquare, Plus, Sun, Moon, LogOut, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
 import { ChatHistoryItem } from '../types/chat';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
@@ -11,6 +11,7 @@ interface SidebarProps {
   onNewChat: () => void;
   onSelectChat?: (id: string) => void;
   activeChatId?: string | null;
+  isLoading?: boolean;
 }
 
 export default function Sidebar({
@@ -18,6 +19,7 @@ export default function Sidebar({
   onNewChat,
   onSelectChat,
   activeChatId,
+  isLoading = false,
 }: SidebarProps) {
   const { theme, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
@@ -54,7 +56,16 @@ export default function Sidebar({
       </div>
 
       <div className="flex-1 overflow-y-auto custom-scrollbar px-3 space-y-6 mt-2">
-        {todayChats.length > 0 && (
+        {isLoading ? (
+          <div className="flex justify-center py-4">
+            <Loader2 size={20} className="animate-spin text-[var(--foreground-muted)]" />
+          </div>
+        ) : chatHistory.length === 0 ? (
+          <div className="px-3 py-4 text-sm text-[var(--foreground-muted)] text-center">
+            No conversations yet
+          </div>
+        ) : null}
+        {!isLoading && todayChats.length > 0 && (
           <div>
             <h3 className="px-3 text-xs font-semibold text-[var(--foreground-muted)] uppercase tracking-wider mb-2">Today</h3>
             {todayChats.map(item => (
@@ -72,7 +83,7 @@ export default function Sidebar({
           </div>
         )}
 
-        {yesterdayChats.length > 0 && (
+        {!isLoading && yesterdayChats.length > 0 && (
           <div>
             <h3 className="px-3 text-xs font-semibold text-[var(--foreground-muted)] uppercase tracking-wider mb-2">Yesterday</h3>
             {yesterdayChats.map(item => (
@@ -90,7 +101,7 @@ export default function Sidebar({
           </div>
         )}
 
-        {previousChats.length > 0 && (
+        {!isLoading && previousChats.length > 0 && (
           <div>
             <h3 className="px-3 text-xs font-semibold text-[var(--foreground-muted)] uppercase tracking-wider mb-2">Previous 7 days</h3>
             {previousChats.map(item => (
